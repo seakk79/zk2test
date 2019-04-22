@@ -1,5 +1,8 @@
 package com.pengdahai.com.utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.junit.Test;
 
 /**
@@ -63,15 +66,25 @@ public class StringUtil {
 //		方法4：判断是否为邮箱 (5分)
 		public boolean isEmail(String src){
 		    //实现代码
-			
-			String reg="[a-zA-Z0-9]+@(163.com || qq.com)";
-			
-			return true;
+			String trim = src.trim();
+		if(trim.contains("@")) {
+			if(trim.endsWith("@")) {
+				return false;
+			}
+			String[] split = trim.split("@");
+			String s1=split[0];
+			String s2=split[1];
+			char[] cs1 = s1.toCharArray();
+			for (int i = 0; i < cs1.length; i++) {
+				if(cs1[i]>='0' && cs1[i]<='9' || cs1[i]>='a' && cs1[i]<='z' || cs1[i]>='A' && cs1[i]<='Z') {
+					if(s2.endsWith(".com") || s2.endsWith(".cn")) {
+						return true;
+					}
+				}
+			}
 		}
-		
-		
-	
-		
+			return false;
+		}
 		
 		
 //		方法5：反转字符串，例如参数值是“abcdefg”，则输出“gfedcba” (5分)
@@ -84,9 +97,12 @@ public class StringUtil {
 			return buffer2.toString();
 		}
 		
+
 		@Test
 		public void atest() {
-		
+			String a="asdadfdf@qq.com";
+			boolean b = isEmail(a);
+			System.out.println(b);
 		}
 	}
 	
